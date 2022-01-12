@@ -1,7 +1,7 @@
 import React from 'react'
 import { KeyboardAvoidingView, Text, View,StyleSheet,Image,TextInput,TouchableOpacity,Alert } from 'react-native';
 
-const OtpScreen = ({navigation}) => {
+const OtpScreen = ({route,navigation}) => {
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.headerbox}>
@@ -13,7 +13,7 @@ const OtpScreen = ({navigation}) => {
                     We sent you a code to verify  your number
                 </Text>
                 <Text style={styles.phoneTxt}>
-                    Sent to 99*** *****
+                    Sent to  {route.params.paramKey}
                 </Text>
 
                 <TextInput
