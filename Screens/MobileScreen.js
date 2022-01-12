@@ -1,7 +1,31 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableOpacity,TextInput,Image } from 'react-native'
 
 const MobileScreen = ({navigation}) => {
+  const [mobileNo, setMobileNo] = useState('');
+
+  var access_key = 'f2049951ead71e1493cee97138c63797';
+  var phone_number = mobileNo;
+
+  const getOtp = async(mobileNo) => {
+
+    if(mobileNo!=''){
+      await fetch('http://apilayer.net/api/validate?access_key=' + access_key + '&number=' + phone_number + '&country_code=IN&format=1'
+      ).then(res => res.json())
+      .then(result => {
+        alert(result.number);
+        alert(result.valid);
+        
+        console.log(result);
+        
+      }).catch(err=>console.log(err))
+    }
+    
+
+  }
+
+
+
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.main}>
@@ -12,12 +36,15 @@ const MobileScreen = ({navigation}) => {
                 <TextInput
                 placeholder='Enter 10 digit Mobile No..'
                 style={styles.input}
+                onChangeText={(mobileNo) => setMobileNo(mobileNo)}
+                value={mobileNo}
                 />
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                     style={styles.button}
-                    onPress={()=>navigation.navigate('Verify')}
+                    // onPress={()=>navigation.navigate('Verify',{ paramKey:mobileNo,})}
+                    onPress={getOtp}
                     >
                         <Text style={styles.txt}>Get OTP</Text>
 
