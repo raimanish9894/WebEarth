@@ -1,7 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { StyleSheet, Text, View,Image,TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 const HelloScreen = ({navigation}) => {
+
+    const[mobileNo,setMobileNo] = useState('9013442592')
     return (
         <View style={styles.container}>
 
@@ -12,7 +14,7 @@ const HelloScreen = ({navigation}) => {
                 Hello
             </Text>
             <Text style={styles.subTitle}>
-                9**** *****
+                {mobileNo}
             </Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
