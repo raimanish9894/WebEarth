@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { KeyboardAvoidingView, Text, View,StyleSheet,Image,TextInput,TouchableOpacity,Alert} from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -6,17 +6,60 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const RegisterScreen = ({navigation}) => {
 
-    let items=[
-        {label: 'Adhar Card', value: 'en'},
-        {label: 'Pan Card', value: 'de'},
-        {label: 'Voter ID', value: 'fr'},
-    ];
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [dob, setDob] = useState('');
+    const [pinCode, setPinCode] = useState('');
 
-    let data=[
-        {label: 'Female', value: 'en'},
-        {label: 'Male', value: 'de'},
+    var name = firstName;
+    var birth = dob;
+    var cityCode = pinCode;
+    var endName = lastName;
+
+    const register = async(firstName,lastName,dob,pinCode) => {
+
+        if(firstName!='' && lastName!='' && dob!='' && pinCode!=''){
+          await fetch('http://dummy.restapiexample.com/api/v1/create',{
+              method:'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+              body: JSON.stringify({
+                  'first Name': name,
+                  'last name':endName,
+                  'date of Birth':birth,
+                  'area code':cityCode,
+                  
+                  
+
+              })
+          }
+          ).then(res => res.json())
+          .then(result => {
+           console.log(result);
+           alert(result.message);
+           
+        //    alert(result.title);
+        //    alert(result.birth);
+            // console.log(result.title);
+            // console.log(result.body);
+            
+          }).catch(err=>console.log(err))
+        }
+      }
+
+    // let items=[
+    //     {label: 'Adhar Card', value: 'en'},
+    //     {label: 'Pan Card', value: 'de'},
+    //     {label: 'Voter ID', value: 'fr'},
+    // ];
+
+    // let data=[
+    //     {label: 'Female', value: 'en'},
+    //     {label: 'Male', value: 'de'},
         
-    ];
+    // ];
     return (
         <KeyboardAvoidingView style={styles.container} behavior='padding'>
             <View style={styles.headerbox}>
@@ -31,6 +74,8 @@ const RegisterScreen = ({navigation}) => {
                 <TextInput
                 placeholder='first name'
                 style={styles.input}
+                onChangeText={(firstName) => setFirstName(firstName)}
+                value={firstName}
                 />
                 
                 <Text style={styles.first}>
@@ -39,6 +84,8 @@ const RegisterScreen = ({navigation}) => {
                 <TextInput
                 placeholder='Last name'
                 style={styles.input}
+                onChangeText={(lastName) => setLastName(lastName)}
+                value={lastName}
                 />
 
                 {/* <Text style={styles.first}>
@@ -55,11 +102,10 @@ const RegisterScreen = ({navigation}) => {
                 <Text style={styles.first}>
                     Date of Birth
                 </Text>
-                <TextInputMask
-                    type={'datetime'}
-                    options={{
-                        format: 'DD-MM-YYYY'
-                    }}
+                <TextInput
+                    onChangeText={(dob) => setDob(dob)}
+                    value={dob}
+                    keyboardType='numeric'
                     style={styles.input}
                     />
                 {/* <Text style={styles.first}>
@@ -80,12 +126,14 @@ const RegisterScreen = ({navigation}) => {
                     placeholder='Pin code'
                     style={styles.input}
                     keyboardType='numeric'
+                    onChangeText={(pinCode) => setPinCode(pinCode)}
+                    value={pinCode}
                     />
 
                 <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={()=>navigation.navigate('Person')}
+                    onPress={register}
                     >
                         <Text style={styles.txt}>Confirm</Text>
 
