@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import { useNavigation } from '@react-navigation/core'
 import { StyleSheet, Text, View, KeyboardAvoidingView,TouchableOpacity,TextInput,Image } from 'react-native'
 
 const MobileScreen = ({navigation}) => {
@@ -17,6 +18,7 @@ const MobileScreen = ({navigation}) => {
         alert(result.valid);
         
         console.log(result);
+        navigation.replace("Verify")
         
       }).catch(err=>console.log(err))
     }
