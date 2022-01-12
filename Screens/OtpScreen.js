@@ -13,7 +13,7 @@ const OtpScreen = ({route,navigation}) => {
                     We sent you a code to verify  your number
                 </Text>
                 <Text style={styles.phoneTxt}>
-                    Sent to  {route.params.paramKey}
+                     {/* Sent to  {route.params.paramKey}  */}
                 </Text>
 
                 <TextInput
